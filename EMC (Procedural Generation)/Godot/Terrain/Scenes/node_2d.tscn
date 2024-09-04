@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://pfxar1f52r0h"]
+
+[ext_resource type="Script" path="res://Scripts/TestCamera.gd" id="1_pkqv0"]
+[ext_resource type="Texture2D" uid="uid://c5o0ynb4pgjjb" path="res://icon.svg" id="2_o8fs2"]
+
+[sub_resource type="TileSet" id="TileSet_vhskk"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("1_pkqv0")
+zoom_factor = 0.99
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_o8fs2")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_vhskk")
+format = 2
