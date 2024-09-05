@@ -34,7 +34,6 @@ class SpiderLeg():
 
 
 leg = SpiderLeg(screen, segments=3)
-screen.fill((0, 0, 0))
 while True:
     
     
@@ -46,6 +45,7 @@ while True:
             x, y = event.pos
             leg.point(x, y)
     
+    screen.fill((0, 0, 0))
     
     leg.draw()
     
