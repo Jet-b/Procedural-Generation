@@ -67,7 +67,7 @@ class Terrain():
         self.screen = kwargs.get('screen', None)
         self.width = screen.get_width()
         self.height = screen.get_height()
-        self.cell_width = kwargs.get('cell_width', 1)
+        self.cell_width = kwargs.get('cell_width', 10)
         self.rows = kwargs.get('rows', self.width//self.cell_width)
         self.cols = kwargs.get('cols', self.height//self.cell_width)
         self.grid = [[None for j in range(self.cols)] for _ in range(self.rows)]
@@ -98,7 +98,7 @@ class Terrain():
     def reset(self):
         self.grid = [[None for j in range(self.cols)] for _ in range(self.rows)]
     
-    def add_perlin_noise(self, scale=0.01):
+    def add_perlin_noise(self, scale=0.1):
         self.permutation_table = generate_permutation_table()
         for i in range(self.rows):
             for j in range(self.cols):
@@ -106,18 +106,18 @@ class Terrain():
                 noise_value = perlin(i * scale, j * scale, self.permutation_table)
                 
                 # Map the noise value to a colour
-                noise_value += 1
-                self.grid[i][j] = (noise_value*(255/2), noise_value*(255/2), noise_value*(255/2))
+                # noise_value += 1
+                # self.grid[i][j] = (noise_value*(255/2), noise_value*(255/2), noise_value*(255/2))
                 
                 # Map the noise value to different terrain types
-                # if noise_value < -0.2:
-                #     self.grid[i][j] = 'G'  # Mountain
-                # elif noise_value < 0:
-                #     self.grid[i][j] = 'F'  # Forest
-                # elif noise_value < 0.2:
-                #     self.grid[i][j] = 'M'  # Grass
-                # else:
-                #     self.grid[i][j] = 'S'  # Snow
+                if noise_value < -0.2:
+                    self.grid[i][j] = 'G'  # Mountain
+                elif noise_value < 0:
+                    self.grid[i][j] = 'F'  # Forest
+                elif noise_value < 0.2:
+                    self.grid[i][j] = 'M'  # Grass
+                else:
+                    self.grid[i][j] = 'S'  # Snow
     
     def debug_draw(self):
         for i in range(self.rows):
@@ -141,10 +141,14 @@ while True:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 exit()
-            # if event.key == pygame.K_s:
-            #     terrain.cell_width -= 1
-            # if event.key == pygame.K_w:
-            #     terrain.cell_width += 1
+            if event.key == pygame.K_s:
+                size = terrain.cell_width
+                terrain = Terrain(screen=screen, cell_width=size-1)
+                terrain.add_perlin_noise()
+            if event.key == pygame.K_w:
+                size = terrain.cell_width
+                terrain = Terrain(screen=screen, cell_width=size+1)
+                terrain.add_perlin_noise()
     
     screen.fill(WHITE)
     
