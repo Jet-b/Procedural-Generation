@@ -135,7 +135,6 @@ while True:
             exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                print("Resetting terrain")
                 terrain.reset()
                 terrain.add_perlin_noise()
             if event.key == pygame.K_ESCAPE:

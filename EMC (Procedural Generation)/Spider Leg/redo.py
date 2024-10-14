@@ -16,7 +16,7 @@ class Leg():
         self.widths = kwargs.get('widths', [self.segments + 1 - i for i in range(self.segments)])
         self.angle = None
     
-    # find the angle of the line between two points
+    # find the angle of the line between two points from horizontal
     def find_angle(self, target, origin):
         if origin == None:
             origin = self.origin
@@ -33,7 +33,10 @@ class Leg():
     def draw_line(self, origin, length, angle, width=2):
         pygame.draw.line(self.screen, (255, 255, 255), origin, (origin[0] + length * math.cos(angle), origin[1] + length * math.sin(angle)), width)
     
-    
+    def find_D(self, x, y):
+        D = (x**2 + y**2)**0.5
+        self.D = D
+        return D
 
 def main():
     pygame.init()
@@ -57,7 +60,6 @@ def main():
         screen.fill((0, 0, 0))
         
         
-        leg.update((x, y))
         leg.draw()
         
         
